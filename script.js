@@ -1,15 +1,15 @@
-const degree = document.querySelector('.degree')
-let degreeCopy = 0;
+const degreeInput = document.querySelector('.degree')
 const submitBtn = document.querySelector('.submitBtn')
+const coeffsDiv = document.querySelector('.coeffs')
+const eqnDiv = document.querySelector('.equation')
 
-const coeffs = document.querySelector('.coeffs')
+let degree = 0;
+let coeffs = []
 
-
-
-const appendInputs = (num) => {
-  coeffs.innerHTML = ""
+const appendInputs = () => {
+  coeffsDiv.innerHTML = ""
   const coeffsForm = document.createElement("form")
-  for (let i=0; i < num; i++) {
+  for (let i=0; i < degree; i++) {
     const inputBox = document.createElement('input')
     inputBox.type = "number"
     inputBox.value = 0 
@@ -21,7 +21,7 @@ const appendInputs = (num) => {
   coeffSubmit.className = 'coeffSubmit'
   coeffSubmit.innerHTML = 'Submit'
   coeffsForm.appendChild(coeffSubmit)
-  coeffs.appendChild(coeffsForm)
+  coeffsDiv.appendChild(coeffsForm)
 
   coeffSubmit.addEventListener('click', coeffInput)
 }
@@ -29,19 +29,30 @@ const appendInputs = (num) => {
 const coeffInput = (event) => {
   event.preventDefault()
 
-  let coeffs = []
-
-  for (let i=0; i<degreeCopy; i++) {
+  for (let i=0; i<degree; i++) {
     coeffBox = document.getElementsByClassName(`${i}`)
     coeffs[i] = coeffBox[0].value
   }
-  console.log(coeffs)
+  
+  showEqn()
+}
+
+const showEqn = () => {
+  for (let i=0; i<degree; i++) {
+    let coeff = document.createElement("p")
+    coeff.innerText = coeffs[i]
+    let x = document.createElement("p")
+    x.innerText = 'x'
+    eqnDiv.appendChild(coeff)
+    eqnDiv.appendChild(x)
+  }
 }
 
 const submitDegree = (event) => {
   event.preventDefault()
-  appendInputs(degree.value)
-  degreeCopy = degree.value
+
+  degree = degreeInput.value
+  appendInputs()
 }
 
 submitBtn.addEventListener('click', submitDegree)
