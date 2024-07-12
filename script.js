@@ -40,11 +40,21 @@ const coeffInput = (event) => {
 const showEqn = () => {
   for (let i=0; i<degree; i++) {
     let coeff = document.createElement("p")
-    coeff.innerText = coeffs[i]
-    let x = document.createElement("p")
-    x.innerText = 'x'
+    let power = document.createElement("sup")
+    power.innerText = degree-(i+1)
+    coeff.innerText = `${coeffs[i]}x`
+    if (i+1 != degree) {
+      coeff.appendChild(power)
+    }
+    if (coeffs[i+1] != 0) {
+
     eqnDiv.appendChild(coeff)
-    eqnDiv.appendChild(x)
+    }
+    if (coeffs[i+1]>0 && i != degree-1) {
+      const plus_sign = document.createElement("p")
+      plus_sign.innerText = "+"
+      eqnDiv.appendChild(plus_sign)
+    }
   }
 }
 
