@@ -4,7 +4,14 @@ const coeffsDiv = document.querySelector('.coeffs')
 const eqnDiv = document.querySelector('.equation')
 
 let degree = 0;
-let coeffs = []
+let termsArray = []
+
+class Term {
+  constructor(power, coeff) {
+    this.power = power
+    this.coeff = coeff
+  }
+}
 
 const appendInputs = () => {
   coeffsDiv.innerHTML = ""
@@ -31,30 +38,33 @@ const coeffInput = (event) => {
 
   for (let i=0; i<degree; i++) {
     coeffBox = document.getElementsByClassName(`${i}`)
-    coeffs[i] = coeffBox[0].value
+    const newTerm = new Term(i, coeffBox[0].value)
+    termsArray.push(newTerm);
   }
   
   showEqn()
 }
 
 const showEqn = () => {
-  for (let i=0; i<degree; i++) {
-    let coeff = document.createElement("p")
-    let power = document.createElement("sup")
-    power.innerText = degree-(i+1)
-    coeff.innerText = `${coeffs[i]}x`
-    if (i+1 != degree) {
-      coeff.appendChild(power)
+  for (i=0; i<termsArray.length; i++) {
+    console.log(termsArray[i])
+    let coeffText = document.createElement("p")
+    let powerText = document.createElement("sup")
+    let termDiv = document.createElement("div")
+    termDiv.className = "termDiv"
+    let coeffValue = termsArray[i].coeff
+    let powerValue = termsArray[termsArray.length-i-1].power
+    console.log(coeffValue, powerValue)
+    coeffText.innerText = `${coeffValue}x`
+    powerText.innerText = powerValue
+    const plusSign = document.createElement("p")
+    if (coeffValue >= 0 && i != 0) {
+      plusSign.innerText = "+"
+      termDiv.appendChild(plusSign)
     }
-    if (coeffs[i+1] != 0) {
-
-    eqnDiv.appendChild(coeff)
-    }
-    if (coeffs[i+1]>0 && i != degree-1) {
-      const plus_sign = document.createElement("p")
-      plus_sign.innerText = "+"
-      eqnDiv.appendChild(plus_sign)
-    }
+    coeffText.appendChild(powerText)
+    termDiv.appendChild(coeffText)
+    eqnDiv.appendChild(termDiv)
   }
 }
 

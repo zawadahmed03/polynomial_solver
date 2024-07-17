@@ -1,4 +1,7 @@
 .equation {
   display: flex;
-  align-items: end;
+}
+
+.termDiv {
+  display: flex;
 }
